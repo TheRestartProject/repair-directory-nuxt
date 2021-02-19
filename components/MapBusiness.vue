@@ -107,7 +107,7 @@
 
         <p v-if="business.address">
           <v-icon name="map-marker" class="fa-fw icon" />
-          <span>{{ business.address }}</span>
+          <span>{{ business.address }}, {{ business.city }}</span>
         </p>
 
         <p v-if="business.warrantyOffered">

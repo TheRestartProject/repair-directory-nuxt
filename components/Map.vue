@@ -4,6 +4,7 @@
     :center="{ lat: center[0], lng: center[1] }"
     map-type-id="roadmap"
     style="width: 100%; height: 100vh"
+    :zoom.sync="zoom"
     @idle="idle"
   >
     <MapBusiness
@@ -54,6 +55,7 @@ export default {
     return {
       map: null,
       fitted: false,
+      zoom: null,
       showModal: false,
       osmtile:
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
@@ -129,7 +131,17 @@ export default {
         }
 
         this.$refs.map.$mapPromise.then((map) => {
-          map.fitBounds(bounds)
+          if (businesses.length === 1) {
+            // Ensure we're not too zoomed in - set a decent zoom and centre.
+            this.$store.dispatch('businesses/setCenter', {
+              lat: businesses[0].geolocation.latitude,
+              lng: businesses[0].geolocation.longitude,
+            })
+
+            this.zoom = 14
+          } else {
+            map.fitBounds(bounds)
+          }
         })
       }
     },

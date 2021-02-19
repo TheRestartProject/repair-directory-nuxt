@@ -176,6 +176,7 @@ export default {
       selected: null,
       category: null,
       radius: null,
+      location: null,
     }
   },
   computed: {
@@ -249,22 +250,6 @@ export default {
 
       return ret
     },
-    location() {
-      let ret = null
-
-      switch (this.region) {
-        case REGION_WALES: {
-          ret = SEARCH_HINT_WALES
-          break
-        }
-        default: {
-          ret = SEARCH_HINT_LONDON
-          break
-        }
-      }
-
-      return ret
-    },
     embedded() {
       // We can embed this page elsewhere.
       let ret = false
@@ -303,6 +288,17 @@ export default {
       this.selected = null
     })
 
+    switch (this.region) {
+      case REGION_WALES: {
+        this.location = SEARCH_HINT_WALES
+        break
+      }
+      default: {
+        this.location = SEARCH_HINT_LONDON
+        break
+      }
+    }
+
     if (this.$route.query.location) {
       this.location = this.$route.query.location
     }
@@ -327,6 +323,7 @@ export default {
         location: this.location,
         category: this.category,
         radius: this.radius,
+        region: this.region,
       })
 
       this.busy = false

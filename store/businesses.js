@@ -32,6 +32,10 @@ export const actions = {
     commit('setList', params.list)
   },
 
+  setCenter({ commit }, params) {
+    commit('setcenter', [params.lat, params.lng])
+  },
+
   async search({ commit }, params) {
     const ret = await this.$axios.get('/api/business/search', {
       params,
