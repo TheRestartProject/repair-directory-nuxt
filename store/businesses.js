@@ -40,10 +40,12 @@ export const actions = {
     if (ret && ret.data && ret.data.businesses) {
       commit('setList', ret.data.businesses)
 
-      commit('setcenter', [
-        ret.data.searchLocation.latitude,
-        ret.data.searchLocation.longitude,
-      ])
+      if (ret.data.searchLocation) {
+        commit('setcenter', [
+          ret.data.searchLocation.latitude,
+          ret.data.searchLocation.longitude,
+        ])
+      }
     }
   },
 }
